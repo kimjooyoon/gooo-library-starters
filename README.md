@@ -11,7 +11,7 @@ the workspace executes without a separate body-plan JSON file.
 Install the Gooo CLI and run these commands from this directory:
 
 ~~~sh
-go install github.com/kimjooyoon/meta-ontology-go/cmd/gooo@dev
+go install github.com/kimjooyoon/meta-ontology-go/cmd/gooo@e83f5e078ad476aab1ef22d7fc59998dc5bf6356
 gooo package resolve gooo.workspace.json
 gooo package execute --json --cases cases.json gooo.workspace.json
 ~~~
