@@ -1,0 +1,7 @@
+package app
+namespace github_com_kimjooyoon_gooo_library_starters_app
+import core "github.com/kimjooyoon/gooo-library-starters/core"
+
+activity Main(Integer) -> Integer computes "return input"
+
+bind core.Clamp.result -> Main.input

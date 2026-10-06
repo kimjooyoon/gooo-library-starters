@@ -1,0 +1,8 @@
+{
+  "schema": "gooo/package-workspace-manifest/v1",
+  "entry": {"package_path": "github.com/kimjooyoon/gooo-library-starters/app", "activity": "Main"},
+  "packages": [
+    {"path": "github.com/kimjooyoon/gooo-library-starters/app", "name": "app", "imports": ["github.com/kimjooyoon/gooo-library-starters/core"], "sources": ["app.gooo"]},
+    {"path": "github.com/kimjooyoon/gooo-library-starters/core", "name": "core", "imports": [], "sources": ["core.gooo"]}
+  ]
+}

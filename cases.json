@@ -1,0 +1,29 @@
+{
+  "schema": "gooo/body-composition-cases/v1",
+  "cases": [
+    {
+      "inputs": {"github.com/kimjooyoon/gooo-library-starters/core:Normalize": -4},
+      "expected": {
+        "github.com/kimjooyoon/gooo-library-starters/core:Normalize": -3,
+        "github.com/kimjooyoon/gooo-library-starters/core:Clamp": 0,
+        "github.com/kimjooyoon/gooo-library-starters/app:Main": 0
+      }
+    },
+    {
+      "inputs": {"github.com/kimjooyoon/gooo-library-starters/core:Normalize": 7},
+      "expected": {
+        "github.com/kimjooyoon/gooo-library-starters/core:Normalize": 8,
+        "github.com/kimjooyoon/gooo-library-starters/core:Clamp": 8,
+        "github.com/kimjooyoon/gooo-library-starters/app:Main": 8
+      }
+    },
+    {
+      "inputs": {"github.com/kimjooyoon/gooo-library-starters/core:Normalize": 12},
+      "expected": {
+        "github.com/kimjooyoon/gooo-library-starters/core:Normalize": 13,
+        "github.com/kimjooyoon/gooo-library-starters/core:Clamp": 10,
+        "github.com/kimjooyoon/gooo-library-starters/app:Main": 10
+      }
+    }
+  ]
+}
