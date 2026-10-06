@@ -77,10 +77,17 @@ The decision is synchronous and happens after candidate scoring, before final
 emission. The JSON report includes the selected candidate, model revision,
 candidate scores, request latency, and finite-case results. In one local Apple
 M4 run, Gooo retained two of the four source-declared assignments after its
-finite tests; Laya selected `add_one` in 209 ms. The three body examples scored
-3/3 and the generated package graph executed 9/9 finite observations. This was
-one warm run; it is not a speed or correctness guarantee. The loaded model
-occupied about 1.13 GiB RSS after inference. An instantaneous CPU sample was
-about 0.2%; GPU utilization was not measured. The decision receipt records the
-checkpoint revision and the request probabilities, so this result can be
-inspected in the JSON output.
+finite tests; Laya selected `add_one`. The first request took about 999 ms and
+a subsequent warm request took 209 ms. The three body examples scored 3/3 and
+the generated package graph executed 9/9 finite observations. This is one
+machine's measurement, not a speed or correctness guarantee. The loaded model
+reached about 1.13 GiB RSS after inference. An instantaneous CPU sample was
+about 0.2%; GPU utilization was not measured.
+
+The local Laya runtime also warned that this checkpoint contains invalid
+temperature settings and used its fallback temperature. It explicitly marked
+the resulting confidence values as uncalibrated. Treat the choice as a ranking
+signal only: Gooo's finite tests and type checks decide whether a candidate can
+proceed. The decision receipt records the checkpoint revision and returned
+probabilities for inspection; those probabilities are not calibrated
+confidence estimates.
