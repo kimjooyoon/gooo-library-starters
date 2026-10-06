@@ -4,9 +4,12 @@ This starter is a small Gooo package graph. The core package declares
 Normalize(Integer) -> Integer and Clamp(Integer) -> Integer; the app package
 imports core and exposes Main. The explicit chain increments an input, clamps
 the result to the closed interval 0..10, and returns it. Normalize's
-`assembling` block declares a complete two-hole assignment: a base expression
-and a step. The candidates and their finite examples live in Gooo source, so
-the workspace executes without a separate body-plan JSON file.
+`assembling` block declares complete two-hole assignments: a base expression
+and a step. Two assignments that pass the finite examples express the same
+behavior with different structure. This lets an optional decision model choose
+between compiler-checked alternatives. The candidates and their finite examples
+live in Gooo source, so the workspace executes without a separate body-plan
+JSON file.
 
 Install the Gooo CLI and run these commands from this directory:
 
@@ -43,3 +46,41 @@ shapes produce a diagnostic.
 The workspace manifest records package imports and the public entry. Package
 resolve prints the deterministic graph receipt; package execute adds generated
 native execution and a replayable receipt for the chosen body fill.
+
+## Optional Laya decision service
+
+Laya can choose between the complete assignments already written in Gooo. It
+does not generate source code. Gooo filters candidates through its declared
+tests, asks Laya to choose among the remaining alternatives, then typechecks,
+replays, and executes the chosen body. Without a configured model service, the
+compiler uses its deterministic candidate order.
+
+For a local Laya install, download only the multilingual checkpoint and start
+the official server on loopback. The multilingual model supports Korean and
+English; see the [Laya model card](https://huggingface.co/convaiinnovations/laya)
+for its requirements and license.
+
+~~~sh
+hf download convaiinnovations/laya --repo-type model --include 'multilingual/*' \
+  --local-dir /path/to/laya-model
+~~~
+
+Configure the server to load only that checkpoint. Then set the endpoint and
+run the workspace:
+
+~~~sh
+GOOO_LAYA_URL=http://127.0.0.1:8787/v1/systemone \
+  gooo package execute --json --cases cases.json gooo.workspace.json
+~~~
+
+The decision is synchronous and happens after candidate scoring, before final
+emission. The JSON report includes the selected candidate, model revision,
+candidate scores, request latency, and finite-case results. In one local Apple
+M4 run, Gooo retained two of the four source-declared assignments after its
+finite tests; Laya selected `add_one` in 209 ms. The three body examples scored
+3/3 and the generated package graph executed 9/9 finite observations. This was
+one warm run; it is not a speed or correctness guarantee. The loaded model
+occupied about 1.13 GiB RSS after inference. An instantaneous CPU sample was
+about 0.2%; GPU utilization was not measured. The decision receipt records the
+checkpoint revision and the request probabilities, so this result can be
+inspected in the JSON output.
