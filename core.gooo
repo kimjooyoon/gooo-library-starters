@@ -12,6 +12,10 @@ return base + increment` assembling {
             fill "seed" "input + 0"
             fill "step" "1"
         }
+        candidate "preserve_then_add_one" {
+            fill "seed" "input"
+            fill "step" "1"
+        }
         candidate "double" {
             fill "seed" "input * 2"
             fill "step" "0"
